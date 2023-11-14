@@ -6,12 +6,16 @@ public class PlayerController : MonoBehaviour
 {
     Vector3 movement;
     Rigidbody rb;
+    [SerializeField] private GameObject camera;
+    [SerializeField] private GameObject pusher;
 
     public float speed = 2f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        camera = transform.Find("Main Camera").gameObject;
+        pusher = transform.Find("Pusher").gameObject;
     }
 
     void Update()
@@ -33,17 +37,14 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.D)) horizontal = speed;
         if (Input.GetKey(KeyCode.W)) vertical = speed;
         else if (Input.GetKey(KeyCode.S)) vertical = -speed;
+
+        transform.rotation = camera.transform.rotation;
         
-        movement = new Vector3(horizontal, 0f, vertical);
+        movement = transform.forward * vertical + transform.right * horizontal;
     }
 
     void MoveHandler()
     {
         rb.MovePosition(transform.position + movement * speed * Time.deltaTime);
-
-        if (movement != Vector3.zero)
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15F);
-        }
     }
 }

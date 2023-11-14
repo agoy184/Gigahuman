@@ -7,7 +7,12 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
 
-    public GameObject player;
+    private GameObject player;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     private void Awake()
     {
@@ -20,21 +25,10 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // Insert Pause/Resume code here, for whoever's doing menus
-
-        // Zoom in/out
-        if (Input.GetKey(KeyCode.Equals))
-        {
-            TopDownCamera.Instance.SetHeight(TopDownCamera.Instance.GetHeight() - 0.1f);
-        }
-        else if (Input.GetKey(KeyCode.Minus))
-        {
-            TopDownCamera.Instance.SetHeight(TopDownCamera.Instance.GetHeight() + 0.1f);
-        }
     }
 
     public GameObject GetPlayer()
     {
-        Debug.Log("Player: " + player);
         return player;
     }
 
