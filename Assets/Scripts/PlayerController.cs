@@ -5,22 +5,28 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     Vector3 movement;
-    Rigidbody rb;
-    [SerializeField] private GameObject camera;
-    [SerializeField] private GameObject pusher;
+    private Rigidbody rb;
+    private GameObject camera;
+    private GameObject head;
+
+    private Vector2 turn;
+    [SerializeField] private float sensitivity = 1f;
+    private float verticalRange = 10f;
 
     public float speed = 2f;
 
     void Start()
     {
+        GameManager.Instance.SetPlayer(gameObject);
         rb = GetComponent<Rigidbody>();
         camera = transform.Find("Main Camera").gameObject;
-        pusher = transform.Find("Pusher").gameObject;
+        head = transform.Find("Body").Find("Head").gameObject;
     }
 
     void Update()
     {
         InputHandler();
+        PerspectiveHandler();
     }
 
     void FixedUpdate()
@@ -46,5 +52,17 @@ public class PlayerController : MonoBehaviour
     void MoveHandler()
     {
         rb.MovePosition(transform.position + movement * speed * Time.deltaTime);
+    }
+
+    void PerspectiveHandler()
+    {
+        turn.x += Input.GetAxis("Mouse X");
+        turn.y += Input.GetAxis("Mouse Y");
+        if (turn.y > verticalRange) turn.y = verticalRange;
+        else if (turn.y < -verticalRange) turn.y = -verticalRange;
+
+        transform.localRotation = Quaternion.Euler(0, turn.x * sensitivity, 0);
+        camera.transform.localRotation = Quaternion.Euler(-turn.y * sensitivity, 0, 0);
+        head.transform.localRotation = Quaternion.Euler(-turn.y * sensitivity, 0, 0);
     }
 }
