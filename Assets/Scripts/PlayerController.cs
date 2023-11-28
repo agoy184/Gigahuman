@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private GameObject camera;
     private GameObject head;
+    private GameObject gun;
 
     private Vector2 turn;
     [SerializeField] private float sensitivity = 1f;
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         camera = transform.Find("Main Camera").gameObject;
         head = transform.Find("Body").Find("Head").gameObject;
+        gun = transform.Find("Body").Find("Gun").gameObject;
     }
 
     void Update()
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         MoveHandler();
+        GunHandler();
     }
 
     void InputHandler()
@@ -64,5 +67,13 @@ public class PlayerController : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0, turn.x * sensitivity, 0);
         camera.transform.localRotation = Quaternion.Euler(-turn.y * sensitivity, 0, 0);
         head.transform.localRotation = Quaternion.Euler(-turn.y * sensitivity, 0, 0);
+    }
+
+    void GunHandler()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            gun.GetComponent<Gun>().Fire();
+        }
     }
 }
