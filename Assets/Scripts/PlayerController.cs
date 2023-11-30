@@ -11,8 +11,8 @@ public class PlayerController : MonoBehaviour
     private GameObject gun;
 
     private Vector2 turn;
-    [SerializeField] private float sensitivity = 1f;
-    private float verticalRange = 10f;
+    private float sensitivity = 0.75f;
+    private float verticalRange = 15f;
 
     public float speed = 2f;
 
