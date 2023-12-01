@@ -9,11 +9,6 @@ public class GameManager : MonoBehaviour
 
     private GameObject player;
 
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
-
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -25,6 +20,11 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // Insert Pause/Resume code here, for whoever's doing menus
+    }
+
+    public void SetPlayer(GameObject player)
+    {
+        this.player = player;
     }
 
     public GameObject GetPlayer()

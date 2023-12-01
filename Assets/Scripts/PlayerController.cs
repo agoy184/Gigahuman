@@ -4,23 +4,56 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // Movement variables
     Vector3 movement;
-    Rigidbody rb;
-    [SerializeField] private GameObject camera;
-    [SerializeField] private GameObject pusher;
-
     public float speed = 2f;
+
+    // Body variables
+    private Rigidbody rb;
+    private GameObject head;
+    private GameObject body;
+    // Renderer array 
+    private Renderer rend;
+    private Color defaultColor;
+
+    // Combat variables
+    private GameObject gun;
+    private Gun gunScript;
+    public int hp = 100;
+    public int maxHp = 100;
+    private float invincibilityTime;
+    public bool isInvincible = false;
+
+    // Perspective variables
+    private GameObject camera;
+    private Vector2 turn;
+    private float sensitivity = 0.75f;
+    private float verticalRange = 15f;
 
     void Start()
     {
+        GameManager.Instance.SetPlayer(gameObject);
+
         rb = GetComponent<Rigidbody>();
         camera = transform.Find("Main Camera").gameObject;
-        pusher = transform.Find("Pusher").gameObject;
+        head = transform.Find("Body").Find("Head").gameObject;
+        gun = transform.Find("Body").Find("Gun").gameObject;
+        body = transform.Find("Body").Find("Capsule").gameObject;
+        gunScript = gun.GetComponent<Gun>();
+
+        rend = body.GetComponent<Renderer>();
+        defaultColor = rend.material.color;
     }
 
     void Update()
     {
         InputHandler();
+        PerspectiveHandler();
+        GunHandler();
+
+        if (isInvincible) {
+            InvinciblityHandler();
+        }
     }
 
     void FixedUpdate()
@@ -46,5 +79,60 @@ public class PlayerController : MonoBehaviour
     void MoveHandler()
     {
         rb.MovePosition(transform.position + movement * speed * Time.deltaTime);
+    }
+
+    void PerspectiveHandler()
+    {
+        turn.x += Input.GetAxis("Mouse X");
+        turn.y += Input.GetAxis("Mouse Y");
+        if (turn.y > verticalRange) turn.y = verticalRange;
+        else if (turn.y < -verticalRange) turn.y = -verticalRange;
+
+        transform.localRotation = Quaternion.Euler(0, turn.x * sensitivity, 0);
+        camera.transform.localRotation = Quaternion.Euler(-turn.y * sensitivity, 0, 0);
+        head.transform.localRotation = Quaternion.Euler(-turn.y * sensitivity, 0, 0);
+    }
+
+    void GunHandler()
+    {
+        if (Input.GetMouseButtonDown(0) && gunScript.CanFire())
+        {
+            gunScript.Fire();
+        }
+    }
+
+    public void TakeDamage(int damage, float duration)
+    {
+        if (isInvincible) return;
+        
+        hp -= damage;
+        Debug.Log("Player took " + damage + " damage. HP: " + hp);
+        rend.material.color = Color.red;
+        Invoke("ResetColor", 0.2f);
+        if (hp <= 0)
+        {
+            // TODO: Game over
+        }
+        MakeInvincible(duration);
+    }
+
+    void ResetColor() {
+        rend.material.color = defaultColor;
+    }
+
+    void MakeInvincible(float duration)
+    {
+        isInvincible = true;
+        invincibilityTime = duration;
+    }
+
+    void InvinciblityHandler()
+    {
+        if (invincibilityTime > 0) {
+            invincibilityTime -= Time.deltaTime;
+        }
+        else {
+            isInvincible = false;
+        }
     }
 }
