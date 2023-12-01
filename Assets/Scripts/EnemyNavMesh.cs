@@ -18,7 +18,7 @@ public class EnemyNavMesh : MonoBehaviour
     private bool isSlowed = false;
     private float slowTime;
 
-    private Transform player;
+    private static Transform player;
 
     private void Start()
     {
