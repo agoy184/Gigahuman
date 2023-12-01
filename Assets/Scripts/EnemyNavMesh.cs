@@ -44,6 +44,8 @@ public class EnemyNavMesh : MonoBehaviour
     void Update()
     {
         // If stunned, do nothing. While stunned, other timers (like slow) are not decremented.
+        player = GameManager.Instance.GetPlayer().transform;
+        Debug.Log(GameManager.Instance.GetPlayer());
 
         if (isStunned) {
             StunHandler();
