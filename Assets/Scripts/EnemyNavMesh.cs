@@ -33,7 +33,10 @@ public class EnemyNavMesh : MonoBehaviour
     public void AssignTarget(Transform target)
     {
         movePositionTransform = target;
-        navMeshAgent.destination = movePositionTransform.position;
+        if (navMeshAgent.enabled == true)
+        {
+            navMeshAgent.destination = movePositionTransform.position;
+        }
     }
 
     Transform getTarget()
@@ -45,7 +48,7 @@ public class EnemyNavMesh : MonoBehaviour
     {
         // If stunned, do nothing. While stunned, other timers (like slow) are not decremented.
         player = GameManager.Instance.GetPlayer().transform;
-        Debug.Log(GameManager.Instance.GetPlayer());
+        //Debug.Log(GameManager.Instance.GetPlayer());
 
         if (isStunned) {
             StunHandler();
