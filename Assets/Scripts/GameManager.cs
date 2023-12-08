@@ -57,6 +57,11 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    public void Die()
+    {
+        Time.timeScale = 0f;
+        gameOverMenu.SetActive(true);
+    }
 
     public void SetPlayer(GameObject player)
     {

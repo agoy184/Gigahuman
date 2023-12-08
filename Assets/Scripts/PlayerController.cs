@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -104,14 +105,13 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage, float duration)
     {
         if (isInvincible) return;
-        
         hp -= damage;
         Debug.Log("Player took " + damage + " damage. HP: " + hp);
         rend.material.color = Color.red;
         Invoke("ResetColor", 0.2f);
         if (hp <= 0)
         {
-            // TODO: Game over
+            GameManager.Instance.Die();
         }
         MakeInvincible(duration);
     }
