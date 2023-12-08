@@ -18,13 +18,6 @@ public class EnemyNavMesh : MonoBehaviour
     private bool isSlowed = false;
     private float slowTime;
 
-    private static Transform player;
-
-    private void Start()
-    {
-        player = GameManager.Instance.GetPlayer().transform;
-    }
-
     private void Awake()
     {
        navMeshAgent= GetComponent<NavMeshAgent>();
@@ -44,8 +37,6 @@ public class EnemyNavMesh : MonoBehaviour
     void Update()
     {
         // If stunned, do nothing. While stunned, other timers (like slow) are not decremented.
-        player = GameManager.Instance.GetPlayer().transform;
-        Debug.Log(GameManager.Instance.GetPlayer());
 
         if (isStunned) {
             StunHandler();
@@ -56,7 +47,7 @@ public class EnemyNavMesh : MonoBehaviour
             SlowHandler();
         }
 
-        AssignTarget(player);
+        AssignTarget(GameManager.Instance.GetPlayer().transform);
     }
 
     void StunHandler()
@@ -66,7 +57,7 @@ public class EnemyNavMesh : MonoBehaviour
         }
         else {    
             isStunned = false;
-            AssignTarget(player);
+            AssignTarget(GameManager.Instance.GetPlayer().transform);
         }
     }
 
