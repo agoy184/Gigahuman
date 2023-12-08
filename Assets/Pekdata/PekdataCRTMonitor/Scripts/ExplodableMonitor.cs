@@ -42,4 +42,8 @@ public class ExplodableMonitor : MonoBehaviour
         }
 
     }
+
+    public void DestroyShards() {
+        Destroy(shards);
+    }
 }

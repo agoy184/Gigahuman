@@ -1223,12 +1223,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 579880937}
     - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: music.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: sounds.Array.size
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: audioSources.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: music.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 219d5ec5f146b4c17914bc8aac0ab7b8, type: 3}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: music.Array.data[1].name
+      value: Portal Idle
       objectReference: {fileID: 0}
     - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: sounds.Array.data[1].clip
@@ -1287,6 +1299,22 @@ PrefabInstance:
       value: TVBreak3
       objectReference: {fileID: 0}
     - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: sounds.Array.data[8].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: efded24e03acd48578688197a22a5a0f, type: 3}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: sounds.Array.data[8].name
+      value: PortalDestroy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: sounds.Array.data[9].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5c8422f203be84d63ae87aa4e4cc1686, type: 3}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: sounds.Array.data[9].name
+      value: PortalSpawn
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: audioSources.Array.data[0]
       value: 
       objectReference: {fileID: 443010086}
@@ -1298,6 +1326,14 @@ PrefabInstance:
       propertyPath: audioSources.Array.data[2]
       value: 
       objectReference: {fileID: 663076673}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: sounds.Array.data[10].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 44f8654afdd86411d94ebf6ffc4b29ac, type: 3}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: sounds.Array.data[10].name
+      value: PortalSpawnEnemy
+      objectReference: {fileID: 0}
     - target: {fileID: 4784345757013253736, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: m_Volume
       value: 0.8

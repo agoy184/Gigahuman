@@ -10,9 +10,15 @@ public class PortalManager : MonoBehaviour
 
         if (ArePortalsDisabled())
         {
-            // Enable the script on the current object
-            NdPortal.SetActive(true);
-          
+            if (!NdPortal.activeSelf) {
+                AudioManager.Instance.PlaySound("PortalSpawn");
+                // Enable the script on the current object
+                NdPortal.SetActive(true);
+            } else {
+                if (!AudioManager.Instance.IsMusicPlaying("Portal Idle") && !GameManager.Instance.isParallelDimension) {
+                    AudioManager.Instance.PlayMusic("Portal Idle");
+                }
+            }
         }
         else
         {

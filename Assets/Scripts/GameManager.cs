@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
         gun.GetComponent<Gun>().Evolve();
         SceneManager.LoadScene(sceneToLoad);
         player.transform.position = new Vector3(0, 0, 0);
+
+        AudioManager.Instance.PlayMusic("Retro Music");
     }
 
 }

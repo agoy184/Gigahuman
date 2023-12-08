@@ -25,6 +25,7 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
+        AudioManager.Instance.PlaySound("PortalSpawnEnemy");
         // Calculate the spawn position below the portal
         Vector3 spawnPosition = portalTransform.position - Vector3.up * 2f;
 

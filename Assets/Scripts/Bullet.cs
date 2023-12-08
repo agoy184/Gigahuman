@@ -22,14 +22,10 @@ public class Bullet : MonoBehaviour
     IEnumerator DisableAfterTime()
     {
         yield return new WaitForSeconds(2f);
-        float t = 0f;
-        while (t < 1f)
+        if (gameObject.activeSelf)
         {
-            t += Time.deltaTime;
-            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, t);
-            yield return null;
+            StartCoroutine(Shrink());
         }
-        gameObject.SetActive(false);
     }
 
     void OnCollisionEnter(Collision other)
@@ -56,5 +52,17 @@ public class Bullet : MonoBehaviour
     public void SetBulletType(int type)
     {
         bulletType = (BulletType)type;
+    }
+
+    public IEnumerator Shrink()
+    {
+        float time = 0;
+        while (time < 1f)
+        {
+            time += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, time);
+            yield return null;
+        }
+        gameObject.SetActive(false);
     }
 }
