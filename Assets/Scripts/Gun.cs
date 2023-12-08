@@ -54,7 +54,7 @@ public class Gun : MonoBehaviour
 
         meshRenderer.material.color = Color.red;
 
-        bulletSpeed = 150f;
+        bulletSpeed = 100f;
         fireRate = 0.1f;
         isEvolved = true;
     }
