@@ -26,7 +26,10 @@ public class EnemyNavMesh : MonoBehaviour
     public void AssignTarget(Transform target)
     {
         movePositionTransform = target;
-        navMeshAgent.destination = movePositionTransform.position;
+        if (navMeshAgent.enabled == true)
+        {
+            navMeshAgent.destination = movePositionTransform.position;
+        }
     }
 
     Transform getTarget()
