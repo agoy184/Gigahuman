@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public static ObjectPool SharedInstance;
+    public static ObjectPool Instance;
     public List<GameObject> pooledBullets = new List<GameObject>();
     public List<GameObject> pooledEnemies = new List<GameObject>();
     public GameObject Bullet;
@@ -14,7 +14,7 @@ public class ObjectPool : MonoBehaviour
 
     void Awake()
     {
-        SharedInstance = this;
+        Instance = this;
     }
 
     void Start()

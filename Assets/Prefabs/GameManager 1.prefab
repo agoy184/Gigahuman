@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5045421801717113891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3957433436093931668}
+  - component: {fileID: 5028193932589326874}
+  - component: {fileID: 6217020604655711312}
+  m_Layer: 0
+  m_Name: GameManager 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3957433436093931668
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5045421801717113891}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5028193932589326874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5045421801717113891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de28af876f914a82a94ac6547274922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indesctructibleObjects: []
+  pauseMenu: {fileID: 0}
+  gameOverMenu: {fileID: 0}
+  isPaused: 0
+  isParallelDimension: 0
+--- !u!114 &6217020604655711312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5045421801717113891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f61bbf4e74224fb48cfd56b4318bd18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pooledBullets: []
+  pooledEnemies: []
+  Bullet: {fileID: 8568600087252115976, guid: f8f042d1b33d94b07810a4d4e41edf37, type: 3}
+  Enemies:
+  - {fileID: 6255198097020576974, guid: 19bb6c7b2523c4405adf29b61ec7e544, type: 3}
+  - {fileID: 4966455112101275076, guid: 8f5596906ad6f4985b472b53986b32cf, type: 3}
+  - {fileID: 8452772398662423538, guid: 56845742cfb2f4ab98e57299524ba4b8, type: 3}

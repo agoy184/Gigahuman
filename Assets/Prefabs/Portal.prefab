@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2585946130321237647}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 2.3473935, y: 11.180877, z: -22.218676}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,10 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7f7dadde9c7d75498f860249bd8229f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 4966455112101275076, guid: 8f5596906ad6f4985b472b53986b32cf, type: 3}
   portalTransform: {fileID: 4338775828126643747}
-  playerTransform: {fileID: 0}
-  spawnInterval: 16
+  spawnInterval: 8
   riseSpeed: 2
 --- !u!1 &9023995641100183761
 GameObject:
@@ -60,8 +58,8 @@ GameObject:
   - component: {fileID: 4338775828126643747}
   - component: {fileID: 1977114389738588432}
   - component: {fileID: 9221861067715226426}
-  - component: {fileID: 1024646942071371817}
   - component: {fileID: 2343187146019348762}
+  - component: {fileID: 260207962296555107}
   m_Layer: 0
   m_Name: Portal
   m_TagString: Portal
@@ -79,7 +77,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -2.3, y: -2.455, z: 9.748522}
-  m_LocalScale: {x: 2, y: 1, z: 0.10000001}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 697507445242522221}
@@ -92,7 +90,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9023995641100183761}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &9221861067715226426
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -135,8 +133,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1024646942071371817
-CapsuleCollider:
+--- !u!114 &2343187146019348762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9023995641100183761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff5b0fb88edd49609767d51a849ba82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &260207962296555107
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -153,20 +163,6 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.0000002, z: 1.0000002}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2343187146019348762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9023995641100183761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bff5b0fb88edd49609767d51a849ba82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

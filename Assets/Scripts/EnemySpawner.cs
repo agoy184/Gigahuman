@@ -30,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = portalTransform.position - Vector3.up * 2f;
 
         // Instantiate the enemy at the calculated position
-        GameObject newEnemy = ObjectPool.SharedInstance.GetRandomPooledEnemy();
+        GameObject newEnemy = ObjectPool.Instance.GetRandomPooledEnemy();
         if (newEnemy != null)
         {
             newEnemy.transform.position = spawnPosition;

@@ -32,14 +32,14 @@ public class Gun : MonoBehaviour
         AudioManager.Instance.PlaySound("Shoot");
         string animationName = isEvolved ? "EvolvedFire" : "Fire";
         animator.SetTrigger(animationName);
-        GameObject bullet = ObjectPool.SharedInstance.GetPooledBullet();
+        GameObject bullet = ObjectPool.Instance.GetPooledBullet();
         if (bullet != null)
         {
             bullet.transform.position = transform.position;
             bullet.SetActive(true);
+            bullet.GetComponent<Bullet>().SetBulletType(isEvolved ? 1 : 0);
+            bullet.GetComponent<Rigidbody>().velocity = GameManager.Instance.GetPlayer().GetComponent<PlayerController>().GetCamera().transform.forward * bulletSpeed;
         } 
-        bullet.GetComponent<Bullet>().SetBulletType(isEvolved ? 1 : 0);
-        bullet.GetComponent<Rigidbody>().velocity = GameManager.Instance.GetPlayer().transform.forward * bulletSpeed;
 
         fireCooldown = fireRate;
     }

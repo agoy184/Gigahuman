@@ -8,8 +8,12 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
 
+    public GameObject[] indesctructibleObjects;
+
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
+
+    private bool playSceneLoaded = false;
 
     public bool isPaused = false;
 
@@ -26,20 +30,33 @@ public class GameManager : MonoBehaviour
             _instance = this;
 
         DontDestroyOnLoad(this);
-
-        AudioManager.Instance.PlayMusic("Retro Music");
     }
 
     private void Update()
     {
-        // Insert Pause/Resume code here, for whoever's doing menus
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (SceneManager.GetActiveScene().name != "MenuScene")
         {
-            if (isPaused)
-                Resume();
-            else
-                Pause();
-        }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (isPaused)
+                    Resume();
+                else
+                    Pause();
+            }
+
+            if (!playSceneLoaded)
+            {
+                if (player != null)
+                {
+                    player.SetActive(true);
+                }
+                AudioManager.Instance.PlayMusic("Retro Music");
+                Cursor.lockState = CursorLockMode.Locked;
+
+                playSceneLoaded = true;
+            }
+        } 
     }
 
     public void SetPlayer(GameObject player)
@@ -79,13 +96,13 @@ public class GameManager : MonoBehaviour
     public void MainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene("MenuScene");
     }
 
     public void Restart()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("HNScene");
     }
 
     public void GameOver()

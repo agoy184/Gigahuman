@@ -32,6 +32,20 @@ public class PlayerController : MonoBehaviour
     private float sensitivity = 0.75f;
     private float verticalRange = 15f;
 
+    // make a singleton
+    private static PlayerController _instance;
+    public static PlayerController Instance { get { return _instance; } }
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+            Destroy(this.gameObject);
+        else
+            _instance = this;
+
+        DontDestroyOnLoad(this);
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -47,6 +61,7 @@ public class PlayerController : MonoBehaviour
 
         GameManager.Instance.SetPlayer(gameObject);
         DontDestroyOnLoad(gameObject);
+        gameObject.SetActive(false);
     }
 
     void Update()
@@ -165,5 +180,10 @@ public class PlayerController : MonoBehaviour
     public GameObject GetGun()
     {
         return gun;
+    }
+
+    public GameObject GetCamera()
+    {
+        return camera;
     }
 }

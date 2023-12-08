@@ -5,11 +5,9 @@ using UnityEngine;
 public class ThirdPersonCamera : MonoBehaviour
 {
     void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;   
-        
+    {      
         // set position relative to player
-        transform.position = new Vector3(0, 5, -8);
+        transform.position = new Vector3(0, 3, -6);
     }
 
     void Update()
