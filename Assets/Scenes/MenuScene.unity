@@ -3757,11 +3757,11 @@ PrefabInstance:
       objectReference: {fileID: 1886809083}
     - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: music.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: sounds.Array.size
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: audioSources.Array.size
@@ -3774,6 +3774,14 @@ PrefabInstance:
     - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: music.Array.data[1].name
       value: Portal Idle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: music.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0c25abcf618844865adcec53a26da67d, type: 3}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: music.Array.data[2].name
+      value: PortalLevel
       objectReference: {fileID: 0}
     - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: sounds.Array.data[1].clip

@@ -59,4 +59,9 @@ public class AudioManager : MonoBehaviour
             return musicSource.clip == s.clip && musicSource.isPlaying;
         }
     }
+
+    public void StopMusic()
+    {
+        musicSource.Stop();
+    }
 }

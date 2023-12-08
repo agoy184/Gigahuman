@@ -15,8 +15,6 @@ public class VirusEnemyStatus : EnemyStatus
         navMesh = gameObject.GetComponent<NavMeshAgent>();
 
         navMesh.speed = speed * 1.25f;
-
-        hp = 100;
     }
 
     public override void TakeDamage(int damage)

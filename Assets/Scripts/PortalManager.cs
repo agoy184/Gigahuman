@@ -5,25 +5,39 @@ using UnityEngine;
 public class PortalManager : MonoBehaviour
 {
     public GameObject NdPortal;
+
+    bool Victory = false;
     void Update()
     {
 
         if (ArePortalsDisabled())
         {
-            if (!NdPortal.activeSelf) {
-                AudioManager.Instance.PlaySound("PortalSpawn");
-                // Enable the script on the current object
-                NdPortal.SetActive(true);
-            } else {
-                if (!AudioManager.Instance.IsMusicPlaying("Portal Idle") && !GameManager.Instance.isParallelDimension) {
-                    AudioManager.Instance.PlayMusic("Portal Idle");
+            if (!GameManager.Instance.isParallelDimension) {
+                if (!NdPortal.activeSelf) {
+                    AudioManager.Instance.PlaySound("PortalSpawn");
+                    // Enable the script on the current object
+                    NdPortal.SetActive(true);
+                } else {
+                    if (!AudioManager.Instance.IsMusicPlaying("Portal Idle") && !GameManager.Instance.isParallelDimension) {
+                        AudioManager.Instance.PlayMusic("Portal Idle");
+                    }
                 }
+            } else {
+                if (!Victory) {
+                    AudioManager.Instance.StopMusic();
+                    AudioManager.Instance.PlaySound("Victory");
+                    Victory = true;
+                }
+            
             }
         }
         else
         {
-            // Disable the script on the current object
-            NdPortal.SetActive(false);
+            if (NdPortal != null) {
+                if (NdPortal.activeSelf) {
+                    NdPortal.SetActive(false);
+                }
+            }
             
         }
 

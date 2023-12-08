@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
                 if (player != null)
                 {
                     player.SetActive(true);
+                    player.transform.position = new Vector3(4.2f, 0, 3.6f);
                 }
                 AudioManager.Instance.PlayMusic("Retro Music");
                 Cursor.lockState = CursorLockMode.Locked;
@@ -75,9 +76,10 @@ public class GameManager : MonoBehaviour
         isParallelDimension = true;
         gun.GetComponent<Gun>().Evolve();
         SceneManager.LoadScene(sceneToLoad);
-        player.transform.position = new Vector3(0, 0, 0);
+        player.transform.position = new Vector3(0, 3, 0);
 
-        AudioManager.Instance.PlayMusic("Retro Music");
+        AudioManager.Instance.PlayMusic("PortalLevel");
+        AudioManager.Instance.PlaySound("GunEvolve");
     }
 
     public void Pause()
