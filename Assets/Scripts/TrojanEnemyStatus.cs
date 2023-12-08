@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TrojanEnemyStatus : EnemyStatus
 {
+    [SerializeField] private HealthBar healthBar;
+    public int maxHp = 100;
     private void Start()
     {
         enemyType = EnemyType.Trojan;
@@ -18,6 +20,7 @@ public class TrojanEnemyStatus : EnemyStatus
         hp -= damage;
         gameObject.GetComponent<Renderer>().material.color = Color.red;
         Invoke("ResetColor", 0.2f);
+        healthBar.UpdateHealthBar(maxHp, hp);
         if (hp <= 0)
         {
             Ragdoll();
