@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
     private GameObject body;
     // Renderer array 
     private Renderer rend;
+    private GameObject mainBody;
+    private MeshRenderer meshRenderer;
+
+    // original material color
     private Color defaultColor;
 
     // Combat variables
@@ -44,6 +48,12 @@ public class PlayerController : MonoBehaviour
 
         rend = body.GetComponent<Renderer>();
         defaultColor = rend.material.color;
+        mainBody = transform.Find("Rig_Body_Upper").Find("UpperBody").gameObject;
+        meshRenderer = mainBody.GetComponent<MeshRenderer>();
+        defaultColor = meshRenderer.material.color;
+
+        GameManager.Instance.SetPlayer(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
@@ -105,10 +115,16 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage, float duration)
     {
         if (isInvincible) return;
+
+        // play random hurt sound from 1 to 3
+        AudioManager.Instance.PlaySound("MetalHit" + Random.Range(1, 4));
+        
         hp -= damage;
         Debug.Log("Player took " + damage + " damage. HP: " + hp);
-        rend.material.color = Color.red;
+
+        meshRenderer.material.color = Color.red;
         Invoke("ResetColor", 0.2f);
+        
         if (hp <= 0)
         {
             GameManager.Instance.Die();
@@ -117,7 +133,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void ResetColor() {
-        rend.material.color = defaultColor;
+        meshRenderer.material.color = defaultColor;
     }
 
     void MakeInvincible(float duration)
