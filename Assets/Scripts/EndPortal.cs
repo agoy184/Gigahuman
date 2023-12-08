@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class EndPortal : MonoBehaviour
 {
@@ -11,8 +10,7 @@ public class EndPortal : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("TRIGGERED");
-            SceneManager.LoadScene(sceneToLoad);
-            
+            GameManager.Instance.TravelToParallelDimension(sceneToLoad);
         }
     }
 }
