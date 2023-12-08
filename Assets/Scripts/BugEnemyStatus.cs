@@ -5,7 +5,9 @@ using UnityEngine.AI;
 
 public class BugEnemyStatus : EnemyStatus
 {
+    public int maxHp = 100;
     public NavMeshAgent navMesh;
+    [SerializeField] private HealthBar healthBar;
     private void Start()
     {
         enemyType = EnemyType.Bug;
@@ -14,8 +16,9 @@ public class BugEnemyStatus : EnemyStatus
         navMesh = gameObject.GetComponent<NavMeshAgent>(); 
 
         navMesh.speed = speed * 1.5f;
-
+       
         hp = 50;
+       
     }
 
     public override void TakeDamage(int damage)
@@ -23,6 +26,7 @@ public class BugEnemyStatus : EnemyStatus
         hp -= damage;
         gameObject.GetComponent<Renderer>().material.color = Color.red;
         Invoke("ResetColor", 0.2f);
+        healthBar.UpdateHealthBar(maxHp, hp);
         if (hp <= 0)
         {
             Ragdoll();

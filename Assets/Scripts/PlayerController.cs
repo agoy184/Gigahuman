@@ -36,6 +36,10 @@ public class PlayerController : MonoBehaviour
     private static PlayerController _instance;
     public static PlayerController Instance { get { return _instance; } }
 
+    //HP bar reference
+
+    [SerializeField] private HealthBar healthBar;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -62,6 +66,8 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.SetPlayer(gameObject);
         DontDestroyOnLoad(gameObject);
         gameObject.SetActive(false);
+
+        //healthBar.UpdateHealthBar(maxHp, hp);
     }
 
     void Update()
@@ -145,6 +151,7 @@ public class PlayerController : MonoBehaviour
         
         hp -= damage;
         Debug.Log("Player took " + damage + " damage. HP: " + hp);
+        healthBar.UpdateHealthBar(maxHp, hp);
 
         meshRenderer.material.color = Color.red;
         Invoke("ResetColor", 0.2f);

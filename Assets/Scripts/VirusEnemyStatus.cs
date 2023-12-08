@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public class VirusEnemyStatus : EnemyStatus
 {
     public NavMeshAgent navMesh;
+    [SerializeField] private HealthBar healthBar;
+    public int maxHp = 100;
     private void Start()
     {
         enemyType = EnemyType.Virus;
@@ -22,6 +24,7 @@ public class VirusEnemyStatus : EnemyStatus
         hp -= damage;
         gameObject.GetComponent<Renderer>().material.color = Color.red;
         Invoke("ResetColor", 0.2f);
+        healthBar.UpdateHealthBar(maxHp, hp);
         if (hp <= 0)
         {
             Ragdoll();
