@@ -11,7 +11,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HNScene.unity
     guid: b49294f924ee542eca97c5ed58102bdb
-  - enabled: 1
-    path: Assets/Scenes/TLevel 2.unity
-    guid: 7cd860574760e43078ac426046e79668
   m_configObjects: {}

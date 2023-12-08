@@ -11,6 +11,11 @@ public class PlayerController : MonoBehaviour
 
     // Body variables
     private Rigidbody rb;
+    private GameObject head;
+    private GameObject body;
+    // Renderer array 
+    private Renderer rend;
+    private Color defaultColor;
 
     // Combat variables
     private GameObject gun;
@@ -28,13 +33,17 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        GameManager.Instance.SetPlayer(gameObject);
+
         rb = GetComponent<Rigidbody>();
         camera = transform.Find("Main Camera").gameObject;
+        head = transform.Find("Body").Find("Head").gameObject;
         gun = transform.Find("Body").Find("Gun").gameObject;
+        body = transform.Find("Body").Find("Capsule").gameObject;
         gunScript = gun.GetComponent<Gun>();
 
-        GameManager.Instance.SetPlayer(gameObject);
-        DontDestroyOnLoad(gameObject);
+        rend = body.GetComponent<Renderer>();
+        defaultColor = rend.material.color;
     }
 
     void Update()
@@ -82,6 +91,7 @@ public class PlayerController : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(0, turn.x * sensitivity, 0);
         camera.transform.localRotation = Quaternion.Euler(-turn.y * sensitivity, 0, 0);
+        head.transform.localRotation = Quaternion.Euler(-turn.y * sensitivity, 0, 0);
     }
 
     void GunHandler()
@@ -97,12 +107,17 @@ public class PlayerController : MonoBehaviour
         if (isInvincible) return;
         hp -= damage;
         Debug.Log("Player took " + damage + " damage. HP: " + hp);
-        
+        rend.material.color = Color.red;
+        Invoke("ResetColor", 0.2f);
         if (hp <= 0)
         {
             GameManager.Instance.Die();
         }
         MakeInvincible(duration);
+    }
+
+    void ResetColor() {
+        rend.material.color = defaultColor;
     }
 
     void MakeInvincible(float duration)
@@ -119,10 +134,5 @@ public class PlayerController : MonoBehaviour
         else {
             isInvincible = false;
         }
-    }
-
-    public GameObject GetGun()
-    {
-        return gun;
     }
 }
