@@ -33,4 +33,16 @@ public class Gun : MonoBehaviour
     {
         return fireCooldown <= 0;
     }
+
+    public void Evolve()
+    {
+        bulletSpeed = 100f;
+        fireRate = 0.25f;
+    }
+
+    public void Devolve()
+    {
+        bulletSpeed = 80f;
+        fireRate = 0.5f;
+    }
 }
