@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get { return _instance; } }
 
     private GameObject player;
+    private GameObject gun;
+
+    public bool isParallelDimension = false;
 
     private void Awake()
     {
@@ -15,6 +19,8 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             _instance = this;
+
+        DontDestroyOnLoad(this);
     }
 
     private void Update()
@@ -25,11 +31,20 @@ public class GameManager : MonoBehaviour
     public void SetPlayer(GameObject player)
     {
         this.player = player;
+        this.gun = player.GetComponent<PlayerController>().GetGun();
     }
 
     public GameObject GetPlayer()
     {
         return player;
+    }
+
+    public void TravelToParallelDimension(string sceneToLoad)
+    {
+        isParallelDimension = true;
+        gun.GetComponent<Gun>().Evolve();
+        SceneManager.LoadScene(sceneToLoad);
+        player.transform.position = new Vector3(0, 0, 0);
     }
 
 }

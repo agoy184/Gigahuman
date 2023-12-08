@@ -32,8 +32,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.SetPlayer(gameObject);
-
         rb = GetComponent<Rigidbody>();
         camera = transform.Find("Main Camera").gameObject;
         head = transform.Find("Body").Find("Head").gameObject;
@@ -43,6 +41,9 @@ public class PlayerController : MonoBehaviour
 
         rend = body.GetComponent<Renderer>();
         defaultColor = rend.material.color;
+
+        GameManager.Instance.SetPlayer(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()
@@ -134,5 +135,10 @@ public class PlayerController : MonoBehaviour
         else {
             isInvincible = false;
         }
+    }
+
+    public GameObject GetGun()
+    {
+        return gun;
     }
 }
