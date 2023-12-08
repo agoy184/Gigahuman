@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = portalTransform.position - Vector3.up * 2f;
 
         // Instantiate the enemy at the calculated position
-        GameObject newEnemy = ObjectPool.SharedInstance.GetPooledEnemy();
+        GameObject newEnemy = ObjectPool.SharedInstance.GetRandomPooledEnemy();
         if (newEnemy != null)
         {
             newEnemy.transform.position = spawnPosition;
@@ -49,11 +49,17 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator RiseToSurface(Transform enemyTransform, NavMeshAgent navMeshAgent)
     {
+        float destinationY = GameManager.Instance.GetPlayer().transform.position.y;
+        if (enemyTransform.gameObject.GetComponent<EnemyStatus>().enemyType == EnemyStatus.EnemyType.Virus)
+        {
+            riseSpeed = 4f;
+        }
+
         // Move the enemy towards the surface
-        while (enemyTransform.position.y < GameManager.Instance.GetPlayer().transform.position.y)
+        while (enemyTransform.position.y < destinationY)
         {
             float step = riseSpeed * Time.deltaTime;
-            Vector3 targetPosition = new Vector3(enemyTransform.position.x, GameManager.Instance.GetPlayer().transform.position.y, enemyTransform.position.z);
+            Vector3 targetPosition = new Vector3(enemyTransform.position.x, destinationY, enemyTransform.position.z);
             enemyTransform.position = Vector3.MoveTowards(enemyTransform.position, targetPosition, step);
             yield return null;
         }

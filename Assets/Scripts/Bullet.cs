@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
             switch (bulletType)
             {
                 case BulletType.Normal:
-                    other.gameObject.GetComponent<EnemyStatus>().TakeDamage(10);
+                    other.gameObject.GetComponent<EnemyStatus>().TakeDamage(25);
                     break;
                 case BulletType.Evolved:
                     other.gameObject.GetComponent<EnemyStatus>().TakeDamage(50);

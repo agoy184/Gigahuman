@@ -8,9 +8,9 @@ public class ObjectPool : MonoBehaviour
     public List<GameObject> pooledBullets = new List<GameObject>();
     public List<GameObject> pooledEnemies = new List<GameObject>();
     public GameObject Bullet;
-    public GameObject Enemy;
+    public GameObject[] Enemies;
     private int bulletsToPool = 30;
-    private int enemiesToPool = 20;
+    private int enemiesToPool = 10;
 
     void Awake()
     {
@@ -19,8 +19,8 @@ public class ObjectPool : MonoBehaviour
 
     void Start()
     {
-        InstantiateObjects(Bullet, pooledBullets, bulletsToPool);
-        InstantiateObjects(Enemy, pooledEnemies, enemiesToPool);
+        InstantiateBullets();
+        InstantiateEnemies();
     }
 
     public void InstantiateObjects(GameObject objectToPool, List<GameObject> objects, int amount)
@@ -58,6 +58,21 @@ public class ObjectPool : MonoBehaviour
         return GetPooledObject(pooledEnemies);
     }
 
+    public GameObject GetRandomPooledEnemy()
+    {
+        if (pooledEnemies.TrueForAll(enemy => enemy.activeInHierarchy)) {
+            return null;
+        }
+
+        GameObject randomEnemy = pooledEnemies[Random.Range(0, pooledEnemies.Count)];
+        if (randomEnemy.activeInHierarchy) {
+            return GetRandomPooledEnemy();
+        }
+        else {
+            return randomEnemy;
+        }
+    }
+
     public void InstantiateBullets()
     {
         InstantiateObjects(Bullet, pooledBullets, bulletsToPool);
@@ -65,6 +80,9 @@ public class ObjectPool : MonoBehaviour
 
     public void InstantiateEnemies()
     {
-        InstantiateObjects(Enemy, pooledEnemies, enemiesToPool);
+        foreach (GameObject enemy in Enemies)
+        {
+            InstantiateObjects(enemy, pooledEnemies, enemiesToPool);
+        }
     }
 }

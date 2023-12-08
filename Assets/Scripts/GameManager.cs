@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
             _instance = this;
 
         DontDestroyOnLoad(this);
+
+        AudioManager.Instance.PlayMusic("Retro Music");
     }
 
     private void Update()
