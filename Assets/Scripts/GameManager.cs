@@ -9,18 +9,54 @@ public class GameManager : MonoBehaviour
 
     private GameObject player;
 
+    public GameObject pauseMenu;
+    public GameObject gameOverMenu;
+    public static bool isPaused;
+
     private void Awake()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+
         if (_instance != null && _instance != this)
             Destroy(this.gameObject);
         else
             _instance = this;
+        pauseMenu.SetActive(false);
+
     }
 
     private void Update()
     {
-        // Insert Pause/Resume code here, for whoever's doing menus
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused) {
+                ResumeGame();
+            }
+            else {
+                PauseGame();
+            }
+        }    
     }
+
+    public void PauseGame()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+    }
+
+    public void ResumeGame()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
 
     public void SetPlayer(GameObject player)
     {
