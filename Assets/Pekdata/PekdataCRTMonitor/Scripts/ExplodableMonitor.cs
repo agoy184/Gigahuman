@@ -23,6 +23,8 @@ public class ExplodableMonitor : MonoBehaviour
     void OnCollisionEnter(Collision col){
         if ((col.gameObject.tag == "bullet") && (!broken))
         {
+            // play a random TV break sound
+            AudioManager.Instance.PlaySound("TVBreak" + Random.Range(1,4));
             broken = true;
             screenOff.SetActive(false);
             screenOn.SetActive(false);

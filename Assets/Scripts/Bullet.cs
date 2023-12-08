@@ -14,6 +14,7 @@ public class Bullet : MonoBehaviour
 
     void OnEnable()
     {
+        transform.localScale = Vector3.one * 0.5f;
         bulletType = BulletType.Normal;
         StartCoroutine(DisableAfterTime());
     }
@@ -21,10 +22,17 @@ public class Bullet : MonoBehaviour
     IEnumerator DisableAfterTime()
     {
         yield return new WaitForSeconds(2f);
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, t);
+            yield return null;
+        }
         gameObject.SetActive(false);
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {

@@ -6,12 +6,14 @@ public class PlayerController : MonoBehaviour
 {
     // Movement variables
     Vector3 movement;
-    public float speed = 2f;
+    public float speed = 5f;
 
     // Body variables
     private Rigidbody rb;
     private GameObject mainBody;
     private MeshRenderer meshRenderer;
+
+    private ParticleSystem ps;
 
     // original material color
     private Color defaultColor;
@@ -41,6 +43,8 @@ public class PlayerController : MonoBehaviour
         meshRenderer = mainBody.GetComponent<MeshRenderer>();
         defaultColor = meshRenderer.material.color;
 
+        ps = GetComponentInChildren<ParticleSystem>();
+
         GameManager.Instance.SetPlayer(gameObject);
         DontDestroyOnLoad(gameObject);
     }
@@ -66,10 +70,27 @@ public class PlayerController : MonoBehaviour
         float horizontal = 0f;
         float vertical = 0f;
 
-        if (Input.GetKey(KeyCode.A)) horizontal = -speed;
-        else if (Input.GetKey(KeyCode.D)) horizontal = speed;
-        if (Input.GetKey(KeyCode.W)) vertical = speed;
-        else if (Input.GetKey(KeyCode.S)) vertical = -speed;
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+            // boost forward slightly
+            transform.position += transform.forward * 0.5f;
+            ps.Play();
+        }
+
+        // if shift is pressed, move faster
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            speed = 9f;
+        }
+        else {
+            speed = 5f;
+            if (ps.isPlaying) {
+                ps.Stop();
+            }
+        }
+
+        if (Input.GetKey(KeyCode.A)) horizontal = -1;
+        else if (Input.GetKey(KeyCode.D)) horizontal = 1;
+        if (Input.GetKey(KeyCode.W)) vertical = 1;
+        else if (Input.GetKey(KeyCode.S)) vertical = -1;
 
         transform.rotation = camera.transform.rotation;
         

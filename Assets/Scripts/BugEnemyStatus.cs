@@ -11,9 +11,9 @@ public class BugEnemyStatus : EnemyStatus
         enemyType = EnemyType.Bug;
         rend = gameObject.GetComponent<Renderer>();
         defaultColor = rend.material.color;
-        navMesh = gameObject.GetComponent<NavMeshAgent>();
+        navMesh = gameObject.GetComponent<NavMeshAgent>(); 
 
-        navMesh.speed = navMesh.speed * 1.5f;
+        navMesh.speed = speed * 1.5f;
 
         hp = 50;
     }

@@ -8,6 +8,8 @@ public abstract class EnemyStatus : MonoBehaviour
     public Color defaultColor;
     public Renderer rend;
 
+    public float speed = 3.5f;
+
     public enum EnemyType
     {
         Trojan,
