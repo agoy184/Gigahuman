@@ -18,10 +18,7 @@ public class Gun : MonoBehaviour
 
     public void Fire()
     {
-        AudioManager.Instance.PlaySound("Shoot");
-        string animationName = isEvolved ? "EvolvedFire" : "Fire";
-        animator.SetTrigger(animationName);
-        GameObject bullet = ObjectPool.SharedInstance.GetPooledBullet();
+        GameObject bullet = BulletPool.SharedInstance.GetPooledBullet();
         if (bullet != null)
         {
             bullet.transform.position = transform.position;

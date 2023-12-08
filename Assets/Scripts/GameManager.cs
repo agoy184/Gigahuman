@@ -23,9 +23,6 @@ public class GameManager : MonoBehaviour
             _instance = this;
         pauseMenu.SetActive(false);
 
-        DontDestroyOnLoad(this);
-
-        AudioManager.Instance.PlayMusic("Retro Music");
     }
 
     private void Update()
