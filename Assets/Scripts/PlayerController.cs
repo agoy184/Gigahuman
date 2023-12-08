@@ -137,6 +137,7 @@ public class PlayerController : MonoBehaviour
         if (hp <= 0)
         {
             // TODO: Game over
+            GameManager.Instance.GameOver();
         }
         MakeInvincible(duration);
     }

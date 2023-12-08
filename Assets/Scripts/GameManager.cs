@@ -8,6 +8,11 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public static GameManager Instance { get { return _instance; } }
 
+    public GameObject pauseMenu;
+    public GameObject gameOverMenu;
+
+    public bool isPaused = false;
+
     private GameObject player;
     private GameObject gun;
 
@@ -28,6 +33,13 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // Insert Pause/Resume code here, for whoever's doing menus
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+                Resume();
+            else
+                Pause();
+        }
     }
 
     public void SetPlayer(GameObject player)
@@ -49,6 +61,37 @@ public class GameManager : MonoBehaviour
         player.transform.position = new Vector3(0, 0, 0);
 
         AudioManager.Instance.PlayMusic("Retro Music");
+    }
+
+    public void Pause()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
+    }
+
+    public void Resume()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+    public void MainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("TitleScene");
+    }
+
+    public void Restart()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void GameOver()
+    {
+        gameOverMenu.SetActive(true);
+        Time.timeScale = 0f;
     }
 
 }

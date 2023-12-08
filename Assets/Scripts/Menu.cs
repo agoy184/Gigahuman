@@ -10,4 +10,19 @@ public class Menu : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
+    public void ResumeGame()
+    {
+        GameManager.Instance.Resume();
+    }
+
+    public void RestartGame()
+    {
+        GameManager.Instance.Restart();
+    }
+
+    public void MainMenu()
+    {
+        GameManager.Instance.MainMenu();
+    }
 }
