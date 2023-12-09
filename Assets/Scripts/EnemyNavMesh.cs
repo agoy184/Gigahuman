@@ -28,7 +28,11 @@ public class EnemyNavMesh : MonoBehaviour
         movePositionTransform = target;
         if (navMeshAgent.enabled == true)
         {
-            navMeshAgent.destination = movePositionTransform.position;
+            // if agent is on navmesh, set destination
+            if (navMeshAgent.isOnNavMesh)
+            {
+                navMeshAgent.destination = movePositionTransform.position;
+            }
         }
     }
 

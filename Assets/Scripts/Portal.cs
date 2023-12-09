@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
+
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "PortalBlocker")
         {
-            AudioManager.Instance.PlaySound("PortalDestroy");
+            AudioManager.Instance.PlaySound("PortalDestroy", audioSource);
             other.gameObject.GetComponent<ExplodableMonitor>().DestroyShards();
             // shrink both portal and blocker
             StartCoroutine(Shrink(other.gameObject));
@@ -26,6 +34,8 @@ public class Portal : MonoBehaviour
             other.transform.localScale = Vector3.Lerp(other.transform.localScale, Vector3.zero, time);
             yield return null;
         }
-        Destroy(other);
+        other.SetActive(false);
+
+        if (other == gameObject) PortalManager.Instance.ArePortalsDisabled();
     }
 }

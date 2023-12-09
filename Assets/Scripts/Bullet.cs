@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
 
     IEnumerator DisableAfterTime()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         if (gameObject.activeSelf)
         {
             StartCoroutine(Shrink());
@@ -43,11 +43,11 @@ public class Bullet : MonoBehaviour
             }
             
             if (other.gameObject.GetComponent<EnemyStatus>().hp > 0) {
-                other.gameObject.GetComponent<EnemyNavMesh>().Stun(1f);
-                other.gameObject.GetComponent<EnemyNavMesh>().Slow(2f, 0.2f);
+                other.gameObject.GetComponent<EnemyNavMesh>().Stun(0.5f);
+                other.gameObject.GetComponent<EnemyNavMesh>().Slow(1f, 0.5f);
             }
             gameObject.SetActive(false);
-        }
+        } 
     }
     public void SetBulletType(int type)
     {

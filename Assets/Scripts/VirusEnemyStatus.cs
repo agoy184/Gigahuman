@@ -6,30 +6,13 @@ using UnityEngine.AI;
 public class VirusEnemyStatus : EnemyStatus
 {
     public NavMeshAgent navMesh;
-    [SerializeField] private HealthBar healthBar;
-    public int maxHp = 100;
     private void Start()
     {
         enemyType = EnemyType.Virus;
-        rend = gameObject.GetComponent<Renderer>();
-        defaultColor = rend.material.color;
 
         navMesh = gameObject.GetComponent<NavMeshAgent>();
 
         navMesh.speed = speed * 1.25f;
-    }
-
-    public override void TakeDamage(int damage)
-    {
-        hp -= damage;
-        gameObject.GetComponent<Renderer>().material.color = Color.red;
-        Invoke("ResetColor", 0.2f);
-        healthBar.UpdateHealthBar(maxHp, hp);
-        if (hp <= 0)
-        {
-            Ragdoll();
-            Invoke("Die", 2f);
-        }
     }
 
     // on collision with player, deal damage
@@ -42,7 +25,7 @@ public class VirusEnemyStatus : EnemyStatus
     }
 
     public override void Ragdoll() {
-        AudioManager.Instance.PlaySound("Explosion");
+        AudioManager.Instance.PlaySound("Explosion", audioSource);
         // Gradually shrink the enemy
         StartCoroutine(Shrink());
     }

@@ -4,60 +4,51 @@ using UnityEngine;
 
 public class PortalManager : MonoBehaviour
 {
-    public GameObject NdPortal;
+    // portal singleton
+    private static PortalManager _instance;
+    public static PortalManager Instance { get { return _instance; } }
 
-    bool Victory = false;
-    void Update()
+    private void Awake()
     {
-
-        if (ArePortalsDisabled())
-        {
-            if (!GameManager.Instance.isParallelDimension) {
-                if (!NdPortal.activeSelf) {
-                    AudioManager.Instance.PlaySound("PortalSpawn");
-                    // Enable the script on the current object
-                    NdPortal.SetActive(true);
-                } else {
-                    if (!AudioManager.Instance.IsMusicPlaying("Portal Idle") && !GameManager.Instance.isParallelDimension) {
-                        AudioManager.Instance.PlayMusic("Portal Idle");
-                    }
-                }
-            } else {
-                if (!Victory) {
-                    AudioManager.Instance.StopMusic();
-                    AudioManager.Instance.PlaySound("Victory");
-                    Victory = true;
-                }
-            
-            }
-        }
-        else
-        {
-            if (NdPortal != null) {
-                if (NdPortal.activeSelf) {
-                    NdPortal.SetActive(false);
-                }
-            }
-            
-        }
-
-        // Your other update logic goes here
+        _instance = this;
     }
 
-    bool ArePortalsDisabled()
-    {
-        GameObject[] portals = GameObject.FindGameObjectsWithTag("Portal");
+    public GameObject NdPortal;
 
+    public GameObject[] portals;
+
+    private AudioSource audioSource;
+
+    private bool Victory = false;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    public void ArePortalsDisabled()
+    {
         foreach (GameObject portal in portals)
         {
             if (portal.activeSelf)
-            {
-                // At least one portal is still active, return false
-                return false;
-            }
+                return;
         }
+        
+        TriggerCheck();
+    }
 
-        // All portals are disabled, return true
-        return true;
+    void TriggerCheck() {
+        if (!GameManager.Instance.isParallelDimension) {
+            if (!NdPortal.activeSelf) {
+                AudioManager.Instance.PlaySound("PortalSpawn", audioSource);
+                // Enable the script on the current object
+                NdPortal.SetActive(true);
+                if (!AudioManager.Instance.IsMusicPlaying("Portal Idle") && !GameManager.Instance.isParallelDimension) {
+                    AudioManager.Instance.PlayMusic("Portal Idle");
+                }
+            } 
+        } else {
+            GameManager.Instance.GameOver(true);
+        }
     }
 }

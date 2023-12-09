@@ -21,19 +21,25 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public void PlaySound(string name)
+    public void PlaySound(string name, AudioSource source)
     {
         Sound s = System.Array.Find(sounds, sound => sound.name == name);
 
         if (s == null)
             return;
         else {
-            // check if any audio sources are available
-            AudioSource audioSource = System.Array.Find(audioSources, source => !source.isPlaying);
-            if (audioSource == null)
-                return;
-            audioSource.clip = s.clip;
-            audioSource.Play();
+            if (source == null) {
+                // check if any audio sources are available
+                AudioSource audioSource = System.Array.Find(audioSources, source => !source.isPlaying);
+                if (audioSource == null)
+                    return;
+                audioSource.clip = s.clip;
+                audioSource.Play();
+            }
+            else {
+                source.clip = s.clip;
+                source.Play();
+            }
         }
     }
 

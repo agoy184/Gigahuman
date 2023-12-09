@@ -5,8 +5,13 @@ using UnityEngine;
 public abstract class EnemyStatus : MonoBehaviour
 {
     public int hp = 100;
+    public int maxHp = 100;
     public Color defaultColor;
     public Renderer rend;
+
+    [SerializeField] public HealthBar healthBar;
+
+    public AudioSource audioSource;
 
     public float speed = 3.5f;
 
@@ -17,9 +22,27 @@ public abstract class EnemyStatus : MonoBehaviour
         Virus
     }
 
+    void OnEnable()
+    {
+        rend = gameObject.GetComponent<Renderer>();
+        defaultColor = rend.material.color;
+        audioSource = gameObject.GetComponent<AudioSource>();
+    }
+
     public EnemyType enemyType;
 
-    public abstract void TakeDamage(int damage);
+    public void TakeDamage(int damage) {
+        AudioManager.Instance.PlaySound("EnemyHurt", audioSource);
+        hp -= damage;
+        gameObject.GetComponent<Renderer>().material.color = Color.red;
+        Invoke("ResetColor", 0.2f);
+        healthBar.UpdateHealthBar(maxHp, hp);
+        if (hp <= 0)
+        {
+            Ragdoll();
+            Invoke("Die", 2f);
+        }
+    }
 
     public abstract void Ragdoll();
 

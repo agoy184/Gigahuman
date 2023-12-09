@@ -4,28 +4,9 @@ using UnityEngine;
 
 public class TrojanEnemyStatus : EnemyStatus
 {
-    [SerializeField] private HealthBar healthBar;
-    public int maxHp = 100;
     private void Start()
     {
         enemyType = EnemyType.Trojan;
-        rend = gameObject.GetComponent<Renderer>();
-        defaultColor = rend.material.color;
-
-        hp = 150;
-    }
-
-    public override void TakeDamage(int damage)
-    {
-        hp -= damage;
-        gameObject.GetComponent<Renderer>().material.color = Color.red;
-        Invoke("ResetColor", 0.2f);
-        healthBar.UpdateHealthBar(maxHp, hp);
-        if (hp <= 0)
-        {
-            Ragdoll();
-            Invoke("Die", 2f);
-        }
     }
 
     // on collision with player, deal damage
@@ -38,7 +19,7 @@ public class TrojanEnemyStatus : EnemyStatus
     }
 
     public override void Ragdoll() {
-        AudioManager.Instance.PlaySound("Explosion");
+        AudioManager.Instance.PlaySound("Explosion", audioSource);
         // Gradually shrink the enemy
         StartCoroutine(Shrink());
     }

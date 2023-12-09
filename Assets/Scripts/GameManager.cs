@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public GameObject[] indesctructibleObjects;
 
     public GameObject pauseMenu;
-    public GameObject gameOverMenu;
 
     private bool playSceneLoaded = false;
 
@@ -21,6 +20,8 @@ public class GameManager : MonoBehaviour
     private GameObject gun;
 
     public bool isParallelDimension = false;
+
+    public bool isWon = false;
 
     private void Awake()
     {
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name != "MenuScene")
+        if (SceneManager.GetActiveScene().name != "MenuScene" && SceneManager.GetActiveScene().name != "MenuScene2" && SceneManager.GetActiveScene().name != "GameOver")
         {
 
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -52,10 +53,20 @@ public class GameManager : MonoBehaviour
                     player.SetActive(true);
                     player.transform.position = new Vector3(4.2f, 0, 3.6f);
                 }
-                AudioManager.Instance.PlayMusic("Retro Music");
+                if (!AudioManager.Instance.IsMusicPlaying("Retro Music")) {
+                    AudioManager.Instance.StopMusic();
+                    AudioManager.Instance.PlayMusic("Retro Music");
+                }
                 Cursor.lockState = CursorLockMode.Locked;
 
                 playSceneLoaded = true;
+            }
+
+            // if on click, and the game is not paused, hide the cursor if it isn't already
+            if (Input.GetMouseButtonDown(0) && !isPaused)
+            {
+                if (Cursor.lockState != CursorLockMode.Locked)
+                    Cursor.lockState = CursorLockMode.Locked;
             }
         } 
     }
@@ -79,7 +90,6 @@ public class GameManager : MonoBehaviour
         player.transform.position = new Vector3(0, 3, 0);
 
         AudioManager.Instance.PlayMusic("PortalLevel");
-        AudioManager.Instance.PlaySound("GunEvolve");
     }
 
     public void Pause()
@@ -98,19 +108,65 @@ public class GameManager : MonoBehaviour
     public void MainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene("MenuScene2");
+
+        Reset();
+        player.SetActive(false);
+        // stop the music
+        AudioManager.Instance.StopMusic();
+
+        playSceneLoaded = false;
+        isParallelDimension = false;
     }
 
     public void Restart()
     {
+        isParallelDimension = false;
         Time.timeScale = 1f;
         SceneManager.LoadScene("HNScene");
+
+        Reset();
+        AudioManager.Instance.PlayMusic("Retro Music");
     }
 
-    public void GameOver()
+    public void GameOver(bool isVictory)
     {
-        gameOverMenu.SetActive(true);
-        Time.timeScale = 0f;
+        isWon = isVictory;
+
+        Reset();
+        player.SetActive(false);
+        // stop the music
+        AudioManager.Instance.StopMusic();
+
+        //playSceneLoaded = false;
+
+        SceneManager.LoadScene("GameOver");
+    }
+
+    public void PlayGame()
+    {
+        SceneManager.LoadScene("HNScene");
+        Reset();
+    }
+
+    public void Reset()
+    {
+        // unload all the enemies
+        ObjectPool.Instance.UnloadAllEnemies();
+        // unload all the bullets
+        ObjectPool.Instance.UnloadAllBullets();
+
+        // reset player position
+        player.transform.position = new Vector3(4.2f, 0, 3.6f);
+        if (gun.GetComponent<Gun>().isEvolved)
+            gun.GetComponent<Gun>().Devolve();
+
+        player.GetComponent<PlayerController>().ResetHealth();
+    }
+
+    public void EnablePlayer()
+    {
+        player.SetActive(true);
     }
 
 }

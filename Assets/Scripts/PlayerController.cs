@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     private GameObject mainBody;
     private MeshRenderer meshRenderer;
 
+    private AudioSource audioSource;
+
+    private AudioSource runAudioSource;
+
     private ParticleSystem ps;
 
     // original material color
@@ -54,20 +58,21 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         camera = transform.Find("Main Camera").gameObject;
-        gun = transform.Find("Body").Find("Gun").gameObject;
+        gun = transform.Find("Rig_Body_Upper").Find("Body").Find("Gun").gameObject;
         gunScript = gun.GetComponent<Gun>();
 
         mainBody = transform.Find("Rig_Body_Upper").Find("UpperBody").gameObject;
         meshRenderer = mainBody.GetComponent<MeshRenderer>();
         defaultColor = meshRenderer.material.color;
 
+        audioSource = GetComponent<AudioSource>();
+        runAudioSource = transform.Find("Rig_Body_Upper").Find("UpperBody").GetComponent<AudioSource>();
+
         ps = GetComponentInChildren<ParticleSystem>();
 
         GameManager.Instance.SetPlayer(gameObject);
         DontDestroyOnLoad(gameObject);
         gameObject.SetActive(false);
-
-        //healthBar.UpdateHealthBar(maxHp, hp);
     }
 
     void Update()
@@ -75,6 +80,11 @@ public class PlayerController : MonoBehaviour
         InputHandler();
         PerspectiveHandler();
         GunHandler();
+
+        // if the player is ever below the ground, teleport them back to the spawn point
+        if (transform.position.y < -10) {
+            transform.position = new Vector3(4.2f, 0, 3.6f);
+        }
 
         if (isInvincible) {
             InvinciblityHandler();
@@ -95,6 +105,7 @@ public class PlayerController : MonoBehaviour
             // boost forward slightly
             transform.position += transform.forward * 0.5f;
             ps.Play();
+            AudioManager.Instance.PlaySound("Run", runAudioSource);
         }
 
         // if shift is pressed, move faster
@@ -105,6 +116,9 @@ public class PlayerController : MonoBehaviour
             speed = 5f;
             if (ps.isPlaying) {
                 ps.Stop();
+            }
+            if (runAudioSource.isPlaying) {
+                runAudioSource.Stop();
             }
         }
 
@@ -147,7 +161,7 @@ public class PlayerController : MonoBehaviour
         if (isInvincible) return;
 
         // play random hurt sound from 1 to 3
-        AudioManager.Instance.PlaySound("MetalHit" + Random.Range(1, 4));
+        AudioManager.Instance.PlaySound("MetalHit" + Random.Range(1, 4), audioSource);
         
         hp -= damage;
         Debug.Log("Player took " + damage + " damage. HP: " + hp);
@@ -158,8 +172,7 @@ public class PlayerController : MonoBehaviour
         
         if (hp <= 0)
         {
-            // TODO: Game over
-            GameManager.Instance.GameOver();
+            GameManager.Instance.GameOver(false);
         }
         MakeInvincible(duration);
     }
@@ -192,5 +205,11 @@ public class PlayerController : MonoBehaviour
     public GameObject GetCamera()
     {
         return camera;
+    }
+
+    public void ResetHealth()
+    {
+        hp = maxHp;
+        healthBar.UpdateHealthBar(maxHp, hp);
     }
 }

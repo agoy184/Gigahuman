@@ -9,14 +9,19 @@ public class Gun : MonoBehaviour
     private float fireCooldown = 0f;
     private MeshRenderer meshRenderer;
 
-    private bool isEvolved = false;
+    public bool isEvolved = false;
 
     private Animator animator;
+
+    private AudioSource audioSource;
+
+    public Camera cam;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         meshRenderer = GetComponent<MeshRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -29,7 +34,7 @@ public class Gun : MonoBehaviour
 
     public void Fire()
     {
-        AudioManager.Instance.PlaySound("Shoot");
+        AudioManager.Instance.PlaySound("Shoot", audioSource);
         string animationName = isEvolved ? "EvolvedFire" : "Fire";
         animator.SetTrigger(animationName);
         GameObject bullet = ObjectPool.Instance.GetPooledBullet();
@@ -38,7 +43,8 @@ public class Gun : MonoBehaviour
             bullet.transform.position = transform.position;
             bullet.SetActive(true);
             bullet.GetComponent<Bullet>().SetBulletType(isEvolved ? 1 : 0);
-            bullet.GetComponent<Rigidbody>().velocity = GameManager.Instance.GetPlayer().GetComponent<PlayerController>().GetCamera().transform.forward * bulletSpeed;
+            // fire the bullet in the direction of the camera
+            bullet.GetComponent<Rigidbody>().velocity = cam.transform.TransformDirection(Vector3.forward * bulletSpeed);
         } 
 
         fireCooldown = fireRate;
@@ -52,6 +58,7 @@ public class Gun : MonoBehaviour
     public void Evolve()
     {
         animator.SetTrigger("Evolve");
+        AudioManager.Instance.PlaySound("GunEvolve", audioSource);
 
         meshRenderer.material.color = Color.red;
 

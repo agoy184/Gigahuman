@@ -7,10 +7,13 @@ public class EnemySpawner : MonoBehaviour
 {
     public Transform portalTransform;
     public float spawnInterval = 2f;
-    public float riseSpeed = 2f;
+    private float riseSpeed = 3f;
+
+    private AudioSource audioSource;
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         StartCoroutine(SpawnEnemies());
     }
 
@@ -25,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        AudioManager.Instance.PlaySound("PortalSpawnEnemy");
+        AudioManager.Instance.PlaySound("PortalSpawnEnemy", audioSource);
         // Calculate the spawn position below the portal
         Vector3 spawnPosition = portalTransform.position - Vector3.up * 2f;
 
@@ -51,10 +54,10 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator RiseToSurface(Transform enemyTransform, NavMeshAgent navMeshAgent)
     {
         float destinationY = GameManager.Instance.GetPlayer().transform.position.y;
-        if (enemyTransform.gameObject.GetComponent<EnemyStatus>().enemyType == EnemyStatus.EnemyType.Virus)
-        {
-            riseSpeed = 4f;
-        }
+        // disable gravity for the enemy 
+        // disable collider for the enemy
+        enemyTransform.GetComponent<Rigidbody>().useGravity = false;
+        enemyTransform.GetComponent<Collider>().enabled = false;
 
         // Move the enemy towards the surface
         while (enemyTransform.position.y < destinationY)
@@ -71,6 +74,9 @@ public class EnemySpawner : MonoBehaviour
             navMeshAgent.enabled = true;
         }
 
-    
+        // Re-enable gravity for the enemy
+        // Re-enable collider for the enemy
+        enemyTransform.GetComponent<Rigidbody>().useGravity = true;
+        enemyTransform.GetComponent<Collider>().enabled = true;
     }
 }

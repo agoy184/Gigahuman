@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TLevel 2.unity
     guid: 7cd860574760e43078ac426046e79668
+  - enabled: 1
+    path: Assets/Scenes/MenuScene2.unity
+    guid: 7d1ce49e7c0b345a3b60d121ec7aa96a
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 0bf062c9ab21f4962a3b8f307810b11f
   m_configObjects: {}

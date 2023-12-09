@@ -85,4 +85,20 @@ public class ObjectPool : MonoBehaviour
             InstantiateObjects(enemy, pooledEnemies, enemiesToPool);
         }
     }
+
+    public void UnloadAllBullets()
+    {
+        foreach (GameObject bullet in pooledBullets)
+        {
+            bullet.SetActive(false);
+        }
+    }
+
+    public void UnloadAllEnemies()
+    {
+        foreach (GameObject enemy in pooledEnemies)
+        {
+            enemy.SetActive(false);
+        }
+    }
 }

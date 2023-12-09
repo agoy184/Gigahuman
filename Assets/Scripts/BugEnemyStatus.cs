@@ -5,33 +5,13 @@ using UnityEngine.AI;
 
 public class BugEnemyStatus : EnemyStatus
 {
-    public int maxHp = 100;
     public NavMeshAgent navMesh;
-    [SerializeField] private HealthBar healthBar;
     private void Start()
     {
         enemyType = EnemyType.Bug;
-        rend = gameObject.GetComponent<Renderer>();
-        defaultColor = rend.material.color;
         navMesh = gameObject.GetComponent<NavMeshAgent>(); 
 
         navMesh.speed = speed * 1.5f;
-       
-        hp = 50;
-       
-    }
-
-    public override void TakeDamage(int damage)
-    {
-        hp -= damage;
-        gameObject.GetComponent<Renderer>().material.color = Color.red;
-        Invoke("ResetColor", 0.2f);
-        healthBar.UpdateHealthBar(maxHp, hp);
-        if (hp <= 0)
-        {
-            Ragdoll();
-            Invoke("Die", 2f);
-        }
     }
 
     // on collision with player, deal damage
@@ -44,7 +24,7 @@ public class BugEnemyStatus : EnemyStatus
     }
 
     public override void Ragdoll() {
-        AudioManager.Instance.PlaySound("Explosion");
+        AudioManager.Instance.PlaySound("Explosion", audioSource);
         // Gradually shrink the enemy
         StartCoroutine(Shrink());
     }

@@ -14,6 +14,8 @@ public class ExplodableMonitor : MonoBehaviour
     private GameObject shards;
     private bool broken;
 
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +26,7 @@ public class ExplodableMonitor : MonoBehaviour
         if ((col.gameObject.tag == "bullet") && (!broken))
         {
             // play a random TV break sound
-            AudioManager.Instance.PlaySound("TVBreak" + Random.Range(1,4));
+            AudioManager.Instance.PlaySound("TVBreak" + Random.Range(1,4), audioSource);
             broken = true;
             screenOff.SetActive(false);
             screenOn.SetActive(false);
@@ -44,6 +46,17 @@ public class ExplodableMonitor : MonoBehaviour
     }
 
     public void DestroyShards() {
-        Destroy(shards);
+        shards.SetActive(false);
+    }
+
+    public void Reset() {
+        broken = false;
+        screenOff.SetActive(true);
+        screenOn.SetActive(true);
+        shards.SetActive(false);
+        screenExplosionParticleSystem.SetActive(false);
+    }
+    void OnEnable() {
+        Reset();
     }
 }

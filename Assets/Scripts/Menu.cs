@@ -8,7 +8,7 @@ public class Menu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameManager.Instance.PlayGame();
     }
 
     public void ResumeGame()
@@ -24,5 +24,10 @@ public class Menu : MonoBehaviour
     public void MainMenu()
     {
         GameManager.Instance.MainMenu();
+    }
+
+    public void EnablePlayer()
+    {
+        GameManager.Instance.EnablePlayer();
     }
 }
