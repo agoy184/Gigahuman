@@ -7,6 +7,11 @@ public class Gun : MonoBehaviour
     private float bulletSpeed = 80f;
     private float fireRate = 0.5f;
     private float fireCooldown = 0f;
+
+    public bool isCharging = false;
+
+    private float chargeTime = 0f;
+    private float maximumChargeTime = 7f;
     private MeshRenderer meshRenderer;
 
     public bool isEvolved = false;
@@ -30,6 +35,25 @@ public class Gun : MonoBehaviour
         {
             fireCooldown -= Time.deltaTime;
         }
+
+        if (Input.GetKeyDown(KeyCode.E)) {
+            AudioManager.Instance.PlaySound("Charge", audioSource);
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            Charge();
+        } else {
+            // if charge sound is playing, stop it
+            if (AudioManager.Instance.IsSoundPlaying("Charge", audioSource))
+                audioSource.Stop();
+
+            if (chargeTime >= 1f) {
+                ChargeShot();
+            }
+            chargeTime = 0f;
+            isCharging = false;
+        }
     }
 
     public void Fire()
@@ -43,6 +67,37 @@ public class Gun : MonoBehaviour
             bullet.transform.position = transform.position;
             bullet.SetActive(true);
             bullet.GetComponent<Bullet>().SetBulletType(isEvolved ? 1 : 0);
+            // fire the bullet in the direction of the camera
+            bullet.GetComponent<Rigidbody>().velocity = cam.transform.TransformDirection(Vector3.forward * bulletSpeed);
+        } 
+
+        fireCooldown = fireRate;
+    }
+
+    public void Charge()
+    {
+        isCharging = true;
+        animator.SetTrigger("Evolve");
+
+        if (chargeTime < maximumChargeTime) {
+            chargeTime += Time.deltaTime;
+        }
+    }
+
+    public void ChargeShot()
+    {
+        AudioManager.Instance.PlaySound("ChargeShot", audioSource);
+        animator.SetTrigger("ChargeShot");
+        GameObject bullet = ObjectPool.Instance.GetPooledBullet();
+        if (bullet != null)
+        {
+            bullet.transform.position = transform.position;
+            bullet.SetActive(true);
+            bullet.GetComponent<Bullet>().SetBulletType(isEvolved ? 3 : 2);
+            bullet.GetComponent<Bullet>().SetChargeTime(chargeTime);
+            if (isEvolved) {
+                bullet.GetComponent<Collider>().isTrigger = true;
+            }
             // fire the bullet in the direction of the camera
             bullet.GetComponent<Rigidbody>().velocity = cam.transform.TransformDirection(Vector3.forward * bulletSpeed);
         } 

@@ -7,10 +7,15 @@ public class Bullet : MonoBehaviour
     enum BulletType
     {
         Normal,
-        Evolved
+        Evolved,
+        ChargeShot,
+
+        EvolvedChargeShot
     }
 
     private BulletType bulletType;
+
+    float chargeTime = 0f;
 
     void OnEnable()
     {
@@ -40,18 +45,52 @@ public class Bullet : MonoBehaviour
                 case BulletType.Evolved:
                     other.gameObject.GetComponent<EnemyStatus>().TakeDamage(50);
                     break;
+                case BulletType.ChargeShot:
+                    other.gameObject.GetComponent<EnemyStatus>().TakeDamage((int) (50*chargeTime));
+                    break;
+                case BulletType.EvolvedChargeShot:
+                    other.gameObject.GetComponent<EnemyStatus>().TakeDamage((int) (100*chargeTime));
+                    break;
             }
             
             if (other.gameObject.GetComponent<EnemyStatus>().hp > 0) {
                 other.gameObject.GetComponent<EnemyNavMesh>().Stun(0.5f);
                 other.gameObject.GetComponent<EnemyNavMesh>().Slow(1f, 0.5f);
             }
-            gameObject.SetActive(false);
+            if (bulletType != BulletType.ChargeShot && bulletType != BulletType.EvolvedChargeShot) gameObject.SetActive(false);
         } 
     }
+
+    void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            if (bulletType == BulletType.EvolvedChargeShot) {
+                other.gameObject.GetComponent<EnemyStatus>().TakeDamage((int) (100*chargeTime));
+                if (other.gameObject.GetComponent<EnemyStatus>().hp > 0) {
+                    other.gameObject.GetComponent<EnemyNavMesh>().Stun(1f);
+                    other.gameObject.GetComponent<EnemyNavMesh>().Slow(1f, 0.5f);
+                }
+            }
+        }
+    }
+
+
     public void SetBulletType(int type)
     {
         bulletType = (BulletType)type;
+    }
+
+    public void SetChargeTime(float time)
+    {
+        chargeTime = time;
+        if (bulletType == BulletType.ChargeShot)
+        { 
+            transform.localScale = Vector3.one * (0.5f + (chargeTime / 2f));
+        } else {
+            transform.localScale = Vector3.one * (0.5f + chargeTime);
+        }
+        // scale mass with size
+        GetComponent<Rigidbody>().mass = 1f + (chargeTime * 2f);
     }
 
     public IEnumerator Shrink()

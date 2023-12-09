@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
         // if shift is pressed, move faster
         if (Input.GetKey(KeyCode.LeftShift)) {
-            speed = 14f;
+            speed = 18f;
         }
         else {
             speed = 8f;
@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
     void GunHandler()
     {
-        if (Input.GetMouseButtonDown(0) && gunScript.CanFire())
+        if (Input.GetMouseButtonDown(0) && gunScript.CanFire() && !gunScript.isCharging)
         {
             gunScript.Fire();
         }

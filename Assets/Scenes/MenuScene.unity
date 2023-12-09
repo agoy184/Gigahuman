@@ -644,9 +644,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5944219564319554881, guid: 04c642de443754ef5a8338343c80a8db, type: 3}
-      propertyPath: m_Mass
-      value: 100
+    - target: {fileID: 3330445018947662097, guid: 04c642de443754ef5a8338343c80a8db, type: 3}
+      propertyPath: playerBody
+      value: 
+      objectReference: {fileID: 1838740352}
+    - target: {fileID: 3330445018947662097, guid: 04c642de443754ef5a8338343c80a8db, type: 3}
+      propertyPath: collisionLayer.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 5944219564319554881, guid: 04c642de443754ef5a8338343c80a8db, type: 3}
       propertyPath: m_AngularDrag
@@ -796,11 +800,12 @@ MonoBehaviour:
     Pause: P
 
 
-    Aim on the
-    screen to shoot
+    Left Click
+    to fire, hold E to charge a shot
 
 
-    Shoot and push TVs into portal holes to stop invading enemies!'
+    Shoot and push TVs into portal holes to
+    stop invading enemies!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3252,6 +3257,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706578655}
   m_CullTransparentMesh: 1
+--- !u!1 &1838740352 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1477308528326647331, guid: 04c642de443754ef5a8338343c80a8db, type: 3}
+  m_PrefabInstance: {fileID: 86314730}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1886809082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3286,7 +3296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: sounds.Array.size
-      value: 16
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: audioSources.Array.size
@@ -3447,6 +3457,22 @@ PrefabInstance:
     - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: sounds.Array.data[15].name
       value: GameOver
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: sounds.Array.data[16].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: fef4cb0b01e524e6bbf2e9ec3c37cc03, type: 3}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: sounds.Array.data[16].name
+      value: Charge
+      objectReference: {fileID: 0}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: sounds.Array.data[17].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5f84d17062b704edda181584a9a9162e, type: 3}
+    - target: {fileID: 4265404502093599147, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
+      propertyPath: sounds.Array.data[17].name
+      value: ChargeShot
       objectReference: {fileID: 0}
     - target: {fileID: 4784345757013253736, guid: 9e2e73cce53d2401188e54f3b757fccf, type: 3}
       propertyPath: m_Volume
