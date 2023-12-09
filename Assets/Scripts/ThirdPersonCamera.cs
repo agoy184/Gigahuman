@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {      
         // set position relative to player
         transform.position = new Vector3(0, 3, -6);

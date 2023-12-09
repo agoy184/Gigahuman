@@ -54,7 +54,7 @@ public class EnemyNavMesh : MonoBehaviour
             SlowHandler();
         }
 
-        AssignTarget(GameManager.Instance.GetPlayer().transform);
+        AssignTarget(GameManager.Instance.GetPlayer().GetComponent<PlayerController>().GetBody());
     }
 
     void StunHandler()
@@ -64,7 +64,7 @@ public class EnemyNavMesh : MonoBehaviour
         }
         else {    
             isStunned = false;
-            AssignTarget(GameManager.Instance.GetPlayer().transform);
+            AssignTarget(GameManager.Instance.GetPlayer().GetComponent<PlayerController>().GetBody());
         }
     }
 

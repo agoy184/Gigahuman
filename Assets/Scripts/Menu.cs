@@ -30,4 +30,9 @@ public class Menu : MonoBehaviour
     {
         GameManager.Instance.EnablePlayer();
     }
+
+    public void DisablePlayer()
+    {
+        GameManager.Instance.DisablePlayer();
+    }
 }

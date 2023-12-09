@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     // Movement variables
     Vector3 movement;
-    public float speed = 5f;
+    public float speed = 8f;
 
     // Body variables
     private Rigidbody rb;
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     // Perspective variables
     private GameObject camera;
     private Vector2 turn;
-    private float sensitivity = 0.75f;
+    private float sensitivity = 0.3f;
     private float verticalRange = 15f;
 
     // make a singleton
@@ -102,18 +102,16 @@ public class PlayerController : MonoBehaviour
         float vertical = 0f;
 
         if (Input.GetKeyDown(KeyCode.LeftShift)) {
-            // boost forward slightly
-            transform.position += transform.forward * 0.5f;
             ps.Play();
             AudioManager.Instance.PlaySound("Run", runAudioSource);
         }
 
         // if shift is pressed, move faster
         if (Input.GetKey(KeyCode.LeftShift)) {
-            speed = 9f;
+            speed = 14f;
         }
         else {
-            speed = 5f;
+            speed = 8f;
             if (ps.isPlaying) {
                 ps.Stop();
             }
@@ -130,11 +128,12 @@ public class PlayerController : MonoBehaviour
         transform.rotation = camera.transform.rotation;
         
         movement = transform.forward * vertical + transform.right * horizontal;
+        movement.Normalize();
     }
 
     void MoveHandler()
     {
-        rb.MovePosition(transform.position + movement * speed * Time.deltaTime);
+        rb.MovePosition(Vector3.Lerp(transform.position, transform.position + movement * speed * Time.deltaTime, 0.5f));
     }
 
     void PerspectiveHandler()
@@ -211,5 +210,9 @@ public class PlayerController : MonoBehaviour
     {
         hp = maxHp;
         healthBar.UpdateHealthBar(maxHp, hp);
+    }
+
+    public Transform GetBody() {
+        return mainBody.transform;
     }
 }

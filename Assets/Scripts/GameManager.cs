@@ -11,9 +11,6 @@ public class GameManager : MonoBehaviour
     public GameObject[] indesctructibleObjects;
 
     public GameObject pauseMenu;
-
-    private bool playSceneLoaded = false;
-
     public bool isPaused = false;
 
     private GameObject player;
@@ -22,6 +19,10 @@ public class GameManager : MonoBehaviour
     public bool isParallelDimension = false;
 
     public bool isWon = false;
+
+    void Start() {
+        AudioManager.Instance.PlayMusic("MainMenu");
+    }
 
     private void Awake()
     {
@@ -37,29 +38,12 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name != "MenuScene" && SceneManager.GetActiveScene().name != "MenuScene2" && SceneManager.GetActiveScene().name != "GameOver")
         {
-
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (isPaused)
                     Resume();
                 else
                     Pause();
-            }
-
-            if (!playSceneLoaded)
-            {
-                if (player != null)
-                {
-                    player.SetActive(true);
-                    player.transform.position = new Vector3(4.2f, 0, 3.6f);
-                }
-                if (!AudioManager.Instance.IsMusicPlaying("Retro Music")) {
-                    AudioManager.Instance.StopMusic();
-                    AudioManager.Instance.PlayMusic("Retro Music");
-                }
-                Cursor.lockState = CursorLockMode.Locked;
-
-                playSceneLoaded = true;
             }
 
             // if on click, and the game is not paused, hide the cursor if it isn't already
@@ -69,6 +53,9 @@ public class GameManager : MonoBehaviour
                     Cursor.lockState = CursorLockMode.Locked;
             }
         } 
+        if (isPaused) {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     public void SetPlayer(GameObject player)
@@ -97,6 +84,7 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void Resume()
@@ -104,6 +92,7 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     public void MainMenu()
     {
@@ -114,8 +103,8 @@ public class GameManager : MonoBehaviour
         player.SetActive(false);
         // stop the music
         AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlayMusic("MainMenu");
 
-        playSceneLoaded = false;
         isParallelDimension = false;
     }
 
@@ -126,6 +115,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("HNScene");
 
         Reset();
+        AudioManager.Instance.StopMusic();
         AudioManager.Instance.PlayMusic("Retro Music");
     }
 
@@ -138,8 +128,6 @@ public class GameManager : MonoBehaviour
         // stop the music
         AudioManager.Instance.StopMusic();
 
-        //playSceneLoaded = false;
-
         SceneManager.LoadScene("GameOver");
     }
 
@@ -147,6 +135,10 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("HNScene");
         Reset();
+        EnablePlayer();
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlayMusic("Retro Music");
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void Reset()
@@ -167,6 +159,11 @@ public class GameManager : MonoBehaviour
     public void EnablePlayer()
     {
         player.SetActive(true);
+    }
+
+    public void DisablePlayer()
+    {
+        player.SetActive(false);
     }
 
 }
